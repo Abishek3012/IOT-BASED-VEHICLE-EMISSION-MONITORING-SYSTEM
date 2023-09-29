@@ -1,0 +1,26 @@
+#include <LiquidCrystal.h>  // include the LCD library
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);  // initialize the LCD pins
+int buzzerPin = 9;  // define the buzzer pin
+int mq7Pin = A0;  // define the MQ-7 sensor pin
+void setup() {
+  pinMode(buzzerPin, OUTPUT);  // set the buzzer pin as an output
+  lcd.begin(16, 2);  // initialize the LCD
+  lcd.print("Gas Sensor Test");  // print a message to the LCD
+  delay(2000);  // wait for 2 seconds
+}
+void loop() {
+  int mq7Value = analogRead(mq7Pin);  // read the value from the MQ-7 sensor
+  if (mq7Value > 600) {  // if the gas level is high
+    lcd.clear();  // clear the LCD screen
+    lcd.print("Gas Detected!");  // print a message to the LCD
+    digitalWrite(buzzerPin, HIGH);  // turn on the buzzer
+    delay(1000);  // wait for 1 second
+    digitalWrite(buzzerPin, LOW);  // turn off the buzzer
+    delay(1000);  // wait for 1 second
+  } else {  // if the gas level is low
+    lcd.clear();  // clear the LCD screen
+    lcd.print("No Gas Detected");  // print a message to the LCD
+    digitalWrite(buzzerPin, LOW);  // turn off the buzzer
+    delay(1000);  // wait for 1 second
+  }
+}
